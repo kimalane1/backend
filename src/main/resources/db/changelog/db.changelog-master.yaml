@@ -1,0 +1,648 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Aljona
+      changes:
+        - createTable:
+            tableName: sector
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent_id
+                  type: int
+              - column:
+                  name: created_date
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+  - changeSet:
+      id: 2
+      author: Aljona
+      changes:
+        - createTable:
+            tableName: app_user
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: agree_terms
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+        - addUniqueConstraint:
+            tableName: app_user
+            columnNames: name
+            constraintName: uq_app_user_name
+
+  - changeSet:
+      id: 3
+      author: Aljona
+      changes:
+        - createTable:
+            tableName: user_sector
+            columns:
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sector_id
+                  type: int
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            columnNames: user_id, sector_id
+            constraintName: pk_user_sector
+            tableName: user_sector
+        - addForeignKeyConstraint:
+            baseTableName: user_sector
+            baseColumnNames: user_id
+            constraintName: fk_user_sector_user
+            referencedTableName: app_user
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: user_sector
+            baseColumnNames: sector_id
+            constraintName: fk_user_sector_sector
+            referencedTableName: sector
+            referencedColumnNames: id
+  - changeSet:
+      id: 4
+      author: aljona
+      changes:
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 1 }
+              - column: { name: name, value: "Manufacturing" }
+              - column: { name: parent_id, value: null }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 19 }
+              - column: { name: name, value: "Construction materials" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 18 }
+              - column: { name: name, value: "Electronics and Optics" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 6 }
+              - column: { name: name, value: "Food and Beverage" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 342 }
+              - column: { name: name, value: "Bakery & confectionery products" }
+              - column: { name: parent_id, value: 6 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 43 }
+              - column: { name: name, value: "Beverages" }
+              - column: { name: parent_id, value: 6 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 42 }
+              - column: { name: name, value: "Fish & fish products" }
+              - column: { name: parent_id, value: 6 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 40 }
+              - column: { name: name, value: "Meat & meat products" }
+              - column: { name: parent_id, value: 6 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 39 }
+              - column: { name: name, value: "Milk & dairy products" }
+              - column: { name: parent_id, value: 6 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 437 }
+              - column: { name: name, value: "Other" }
+              - column: { name: parent_id, value: 6 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 378 }
+              - column: { name: name, value: "Sweets & snack food" }
+              - column: { name: parent_id, value: 6 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 13 }
+              - column: { name: name, value: "Furniture" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 389 }
+              - column: { name: name, value: "Bathroom/sauna" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 385 }
+              - column: { name: name, value: "Bedroom" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 390 }
+              - column: { name: name, value: "Children’s room" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 98 }
+              - column: { name: name, value: "Kitchen" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 101 }
+              - column: { name: name, value: "Living room" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 392 }
+              - column: { name: name, value: "Office" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 394 }
+              - column: { name: name, value: "Other (Furniture)" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 341 }
+              - column: { name: name, value: "Outdoor" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 99 }
+              - column: { name: name, value: "Project furniture" }
+              - column: { name: parent_id, value: 13 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 12 }
+              - column: { name: name, value: "Machinery" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 94 }
+              - column: { name: name, value: "Machinery components" }
+              - column: { name: parent_id, value: 12 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 91 }
+              - column: { name: name, value: "Machinery equipment/tools" }
+              - column: { name: parent_id, value: 12 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 224 }
+              - column: { name: name, value: "Manufacture of machinery" }
+              - column: { name: parent_id, value: 12 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 97 }
+              - column: { name: name, value: "Maritime" }
+              - column: { name: parent_id, value: 12 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 271 }
+              - column: { name: name, value: "Aluminium and steel workboats" }
+              - column: { name: parent_id, value: 97 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 269 }
+              - column: { name: name, value: "Boat/Yacht building" }
+              - column: { name: parent_id, value: 97 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 230 }
+              - column: { name: name, value: "Ship repair and conversion" }
+              - column: { name: parent_id, value: 97 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 93 }
+              - column: { name: name, value: "Metal structures" }
+              - column: { name: parent_id, value: 12 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 508 }
+              - column: { name: name, value: "Other" }
+              - column: { name: parent_id, value: 12 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 227 }
+              - column: { name: name, value: "Repair and maintenance service" }
+              - column: { name: parent_id, value: 12 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 11 }
+              - column: { name: name, value: "Metalworking" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 67 }
+              - column: { name: name, value: "Construction of metal structures" }
+              - column: { name: parent_id, value: 11 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 263 }
+              - column: { name: name, value: "Houses and buildings" }
+              - column: { name: parent_id, value: 11 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 267 }
+              - column: { name: name, value: "Metal products" }
+              - column: { name: parent_id, value: 11 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 542 }
+              - column: { name: name, value: "Metal works" }
+              - column: { name: parent_id, value: 11 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 75 }
+              - column: { name: name, value: "CNC-machining" }
+              - column: { name: parent_id, value: 542 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 62 }
+              - column: { name: name, value: "Forgings, Fasteners" }
+              - column: { name: parent_id, value: 542 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 69 }
+              - column: { name: name, value: "Gas, Plasma, Laser cutting" }
+              - column: { name: parent_id, value: 542 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 66 }
+              - column: { name: name, value: "MIG, TIG, Aluminum welding" }
+              - column: { name: parent_id, value: 542 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 9 }
+              - column: { name: name, value: "Plastic and Rubber" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 54 }
+              - column: { name: name, value: "Packaging" }
+              - column: { name: parent_id, value: 9 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 556 }
+              - column: { name: name, value: "Plastic goods" }
+              - column: { name: parent_id, value: 9 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 559 }
+              - column: { name: name, value: "Plastic processing technology" }
+              - column: { name: parent_id, value: 9 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 55 }
+              - column: { name: name, value: "Blowing" }
+              - column: { name: parent_id, value: 559 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 57 }
+              - column: { name: name, value: "Moulding" }
+              - column: { name: parent_id, value: 559 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 53 }
+              - column: { name: name, value: "Plastics welding and processing" }
+              - column: { name: parent_id, value: 559 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 560 }
+              - column: { name: name, value: "Plastic profiles" }
+              - column: { name: parent_id, value: 9 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 5 }
+              - column: { name: name, value: "Printing" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 148 }
+              - column: { name: name, value: "Advertising" }
+              - column: { name: parent_id, value: 5 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 150 }
+              - column: { name: name, value: "Book/Periodicals printing" }
+              - column: { name: parent_id, value: 5 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 145 }
+              - column: { name: name, value: "Labelling and packaging printing" }
+              - column: { name: parent_id, value: 5 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 7 }
+              - column: { name: name, value: "Textile and Clothing" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 44 }
+              - column: { name: name, value: "Clothing" }
+              - column: { name: parent_id, value: 7 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 45 }
+              - column: { name: name, value: "Textile" }
+              - column: { name: parent_id, value: 7 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 8 }
+              - column: { name: name, value: "Wood" }
+              - column: { name: parent_id, value: 1 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 337 }
+              - column: { name: name, value: "Other (Wood)" }
+              - column: { name: parent_id, value: 8 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 51 }
+              - column: { name: name, value: "Wooden building materials" }
+              - column: { name: parent_id, value: 8 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 47 }
+              - column: { name: name, value: "Wooden houses" }
+              - column: { name: parent_id, value: 8 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 3 }
+              - column: { name: name, value: "Other" }
+              - column: { name: parent_id, value: null }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 37 }
+              - column: { name: name, value: "Creative industries" }
+              - column: { name: parent_id, value: 3 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 29 }
+              - column: { name: name, value: "Energy technology" }
+              - column: { name: parent_id, value: 3 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 33 }
+              - column: { name: name, value: "Environment" }
+              - column: { name: parent_id, value: 3 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 2 }
+              - column: { name: name, value: "Service" }
+              - column: { name: parent_id, value: null }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 25 }
+              - column: { name: name, value: "Business services" }
+              - column: { name: parent_id, value: 2 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 35 }
+              - column: { name: name, value: "Engineering" }
+              - column: { name: parent_id, value: 2 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 28 }
+              - column: { name: name, value: "Information Technology and Telecommunications" }
+              - column: { name: parent_id, value: 2 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 581 }
+              - column: { name: name, value: "Data processing, Web portals, E-marketing" }
+              - column: { name: parent_id, value: 28 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 576 }
+              - column: { name: name, value: "Programming, Consultancy" }
+              - column: { name: parent_id, value: 28 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 121 }
+              - column: { name: name, value: "Software, Hardware" }
+              - column: { name: parent_id, value: 28 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 122 }
+              - column: { name: name, value: "Telecommunications" }
+              - column: { name: parent_id, value: 28 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 22 }
+              - column: { name: name, value: "Tourism" }
+              - column: { name: parent_id, value: 2 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 141 }
+              - column: { name: name, value: "Translation services" }
+              - column: { name: parent_id, value: 2 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 21 }
+              - column: { name: name, value: "Transport and Logistics" }
+              - column: { name: parent_id, value: 2 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 111 }
+              - column: { name: name, value: "Air" }
+              - column: { name: parent_id, value: 21 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 114 }
+              - column: { name: name, value: "Rail" }
+              - column: { name: parent_id, value: 21 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 112 }
+              - column: { name: name, value: "Road" }
+              - column: { name: parent_id, value: 21 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
+        - insert:
+            tableName: sector
+            columns:
+              - column: { name: id, value: 113 }
+              - column: { name: name, value: "Water" }
+              - column: { name: parent_id, value: 21 }
+              - column: { name: created_date, valueDate: CURRENT_TIMESTAMP }
