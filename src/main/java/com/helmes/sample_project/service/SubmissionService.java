@@ -2,6 +2,7 @@ package com.helmes.sample_project.service;
 
 import com.helmes.sample_project.dto.SubmissionRequest;
 import com.helmes.sample_project.dto.SubmissionResponse;
+import com.helmes.sample_project.exception.UserNotFoundException;
 import com.helmes.sample_project.model.AppUser;
 import com.helmes.sample_project.model.Sector;
 import com.helmes.sample_project.persistence.AppUserRepository;
@@ -40,7 +41,7 @@ public class SubmissionService {
     @Transactional
     public SubmissionResponse getSubmission(Long id) {
         AppUser user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id=" + id));
 
         List<Integer> sectorIds = user.getSectors()
                 .stream()
@@ -58,7 +59,7 @@ public class SubmissionService {
     @Transactional
     public SubmissionResponse updateSubmission(Long id, SubmissionRequest req) {
         AppUser user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id=" + id));
 
         user.setName(req.name());
         user.setAgreeTerms(req.agree());
